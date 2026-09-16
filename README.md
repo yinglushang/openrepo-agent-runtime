@@ -7,16 +7,16 @@ SSE 实时事件、可验证审计链和 Docker 部署。
 本项目参考 [Pi Agent Harness](https://pi.dev) 的模型—工具循环和 Harness 设计思路，但不是逐行翻译：
 它以 Python 生态重新实现，并把“可恢复审批、策略守卫、执行审计和 Web 可视化”作为二次开发重点。
 
-> 默认 `demo` provider 完全离线运行，不需要 API Key，适合面试和作品集演示。
+> 默认 `demo` provider 完全离线运行，不需要 API Key，可用于本地验证工具调用、人工审批和任务恢复流程。
 
 仓库地址：[yinglushang/openrepo-agent-runtime](https://github.com/yinglushang/openrepo-agent-runtime)。
 仓库只包含源码、配置模板、测试、评测集及结果摘要；原始运行数据和真实凭证不提交 Git。
 
 ![OpenRepo Agent Runtime 界面预览](docs/images/dashboard-preview.svg)
 
-## 为什么这个项目适合写进简历
+## 核心能力
 
-它不是简单的聊天接口封装，而是覆盖了 Agent 工程里几个更容易被追问的部分：
+围绕代码仓库任务，提供检索、执行、运行控制、状态恢复和审计能力：
 
 - **状态机：** LangGraph `StateGraph` 实现 `Planner → Executor ↔ tools → Reviewer` 工作流；
 - **仓库检索：** 按符号边界和滑窗切分代码，融合 BM25-style 关键词与 Embedding 向量召回，
@@ -59,7 +59,7 @@ flowchart LR
 关于项目动机、设计取舍、Chunk 调优、检索与 Agent 故障恢复的完整说明，见
 [docs/PROJECT_DEEP_DIVE.zh-CN.md](docs/PROJECT_DEEP_DIVE.zh-CN.md)。
 
-## 1 分钟启动
+## 快速启动
 
 需要 Python 3.12+。
 
@@ -258,7 +258,7 @@ Compose 会持久化 `/app/data` 和 `/app/workspace`。当前 SSE broker 是进
 ## 目录结构
 
 ```text
-python-agent-runtime/
+openrepo-agent-runtime/
 ├── app/
 │   ├── api.py          # FastAPI、SSE、静态控制台
 │   ├── graph.py        # LangGraph 状态图与 interrupt/resume
@@ -273,7 +273,7 @@ python-agent-runtime/
 ├── examples/           # Qwen 真实模型验收用隔离仓库
 ├── scripts/            # 评测命令
 ├── tests/              # 43 个自动化测试
-├── docs/               # 架构、评测与简历模块
+├── docs/               # 架构、使用、部署与评测文档
 ├── Dockerfile
 └── docker-compose.yml
 ```
@@ -282,11 +282,6 @@ python-agent-runtime/
 
 应用层策略不等同于操作系统沙箱。运行不可信仓库或命令时，还应使用容器/微型虚拟机、只读挂载、
 网络出口控制、非 root 用户和最小权限凭证。不要把宿主机 Docker socket、SSH 目录或云凭证挂载给 Agent。
-
-## 简历文案
-
-已经整理为可直接修改的中文模块：[docs/RESUME.md](docs/RESUME.md)。
-面试时只陈述你实际运行、验证并能解释的部分。
 
 ## License
 
