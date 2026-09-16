@@ -1,0 +1,21 @@
+services:
+  agent-runtime:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      AGENT_PROVIDER: ${AGENT_PROVIDER:-demo}
+      AGENT_MODEL: ${AGENT_MODEL:-demo-safe}
+      AGENT_API_KEY: ${AGENT_API_KEY:-}
+      AGENT_BASE_URL: ${AGENT_BASE_URL:-}
+      AGENT_WORKSPACE: /app/workspace
+      AGENT_DATA_DIR: /app/data
+      AGENT_POLICY_FILE: /app/config/runtime.example.json
+    volumes:
+      - agent-data:/app/data
+      - agent-workspace:/app/workspace
+    restart: unless-stopped
+
+volumes:
+  agent-data:
+  agent-workspace:

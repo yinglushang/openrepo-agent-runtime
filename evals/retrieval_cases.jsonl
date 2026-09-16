@@ -1,0 +1,6 @@
+{"id":"calculator-discount","query":"calculate_total quantity percentage discount validation","relevant_paths":["src/calculator.py"]}
+{"id":"sql-injection","query":"find_order raw SQL query injection order_id","relevant_paths":["src/order_service.py"]}
+{"id":"stock-race","query":"reserve_stock inventory overselling race condition quantity","relevant_paths":["src/order_service.py"]}
+{"id":"invalid-discount-test","query":"test invalid discount raises ValueError","relevant_paths":["tests/test_calculator.py"]}
+{"id":"verification-command","query":"python unittest discover verification command","relevant_paths":["README.md"]}
+{"id":"repository-purpose","query":"small reproducible real model acceptance repository tasks","relevant_paths":["README.md"]}

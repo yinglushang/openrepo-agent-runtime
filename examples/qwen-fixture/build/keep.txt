@@ -1,0 +1,1 @@
+This directory exists only for the human-approval acceptance scenario.

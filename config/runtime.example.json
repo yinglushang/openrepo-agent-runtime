@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "allowed_tools": ["list_files", "read_file", "retrieve_code", "run_command", "search_text", "write_file"],
+  "denied_tools": [],
+  "max_tool_calls_per_run": 20,
+  "max_repeated_calls": 3,
+  "max_failures_per_run": 4,
+  "approval_timeout_seconds": 60,
+  "protected_paths": [".git", ".venv", "data", "node_modules"],
+  "sensitive_read_paths": [".env", ".npmrc", ".ssh", ".aws", "*.key", "*.pem"]
+}

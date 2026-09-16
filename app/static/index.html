@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="LangGraph Agent Runtime 可视化演示" />
+    <title>OpenRepo Agent Runtime</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260916" />
+  </head>
+  <body>
+    <div class="shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">OR</div>
+          <div>
+            <p class="eyebrow">LANGGRAPH · POLICY-FIRST</p>
+            <h1>OpenRepo Agent Runtime</h1>
+          </div>
+        </div>
+        <div class="status-pill"><span class="pulse"></span><span id="connection">正在连接</span></div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero-panel panel">
+          <div class="hero-copy">
+            <p class="eyebrow">可恢复 · 可审批 · 可审计</p>
+            <h2>让 Agent 的每一次行动<br /><span>都有边界，也有证据。</span></h2>
+            <p class="subcopy">
+              Python + LangGraph 驱动的安全运行时。工具调用先经过策略判定，高风险操作暂停等待人工审批，
+              全链路事件与 SHA-256 审计记录可回放、可验证。
+            </p>
+          </div>
+          <div class="metric-grid">
+            <article><strong id="metric-tools">0</strong><span>工具调用</span></article>
+            <article><strong id="metric-blocked">0</strong><span>风险拦截</span></article>
+            <article><strong id="metric-events">0</strong><span>实时事件</span></article>
+            <article><strong id="metric-audit">—</strong><span>审计记录</span></article>
+          </div>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="panel task-panel">
+            <div class="panel-heading">
+              <div>
+                <p class="eyebrow">AGENT CONSOLE</p>
+                <h3>任务控制台</h3>
+              </div>
+              <span class="session-badge" id="session-id">创建会话中…</span>
+            </div>
+
+            <div class="quick-actions" aria-label="示例任务">
+              <button data-prompt="列出工作区中的文件">列出文件</button>
+              <button data-prompt="读取示例文件">读取文件</button>
+              <button data-prompt="创建一个演示文件">写入审批</button>
+              <button class="danger-chip" data-prompt="演示删除目录的危险操作">危险操作</button>
+            </div>
+
+            <div class="conversation" id="conversation" aria-live="polite">
+              <div class="message system-message">
+                <span class="message-label">RUNTIME</span>
+                <span id="runtime-summary">正在读取运行时配置…</span>
+              </div>
+            </div>
+
+            <form id="prompt-form" class="composer">
+              <label for="prompt" class="sr-only">输入任务</label>
+              <textarea id="prompt" rows="2" placeholder="例如：列出工作区中的文件" required></textarea>
+              <button id="send-button" type="submit">运行任务 <span>↗</span></button>
+            </form>
+          </div>
+
+          <aside class="side-column">
+            <section class="panel approval-panel" id="approval-panel">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="eyebrow">HUMAN IN THE LOOP</p>
+                  <h3>人工审批</h3>
+                </div>
+                <span class="risk-badge">HIGH</span>
+              </div>
+              <div id="approval-empty" class="empty-state">
+                <div class="shield">✓</div>
+                <p>当前没有待审批操作</p>
+                <span>高风险工具调用会在这里暂停</span>
+              </div>
+              <div id="approval-card" class="approval-card hidden">
+                <div class="command-box">
+                  <span>TOOL REQUEST</span>
+                  <strong id="approval-tool"></strong>
+                  <code id="approval-args"></code>
+                </div>
+                <p id="approval-reason"></p>
+                <label class="remember"><input id="remember" type="checkbox" /> 本轮记住相同操作</label>
+                <div class="approval-actions">
+                  <button id="deny-button" class="deny">拒绝</button>
+                  <button id="approve-button" class="approve">批准执行</button>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel event-panel">
+              <div class="panel-heading compact">
+                <div>
+                  <p class="eyebrow">LIVE TELEMETRY</p>
+                  <h3>执行轨迹</h3>
+                </div>
+                <button class="text-button" id="verify-audit">验证审计链</button>
+              </div>
+              <ol class="timeline" id="timeline"></ol>
+            </section>
+          </aside>
+        </section>
+      </main>
+      <footer>Python 3.12 · LangGraph · FastAPI · SQLite · SSE · SHA-256 Audit Chain</footer>
+    </div>
+    <script src="/static/app.js?v=20260916" defer></script>
+  </body>
+</html>
